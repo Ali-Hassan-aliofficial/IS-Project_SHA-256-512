@@ -1,0 +1,67 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashing Functions</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="sha256_sha512.js" defer></script>
+    <script src="hashing.js" defer></script>
+</head>
+<body>
+    <h1>Generate SHA-256 & SHA-512 Hashes</h1>
+    <input type="text" id="input" placeholder="Enter text to hash" />
+    <div>
+        <input type="radio" id="sha256" name="hashingAlgorithm" value="sha256">
+        <label for="sha256">SHA-256</label>
+        
+        <input type="radio" id="sha512" name="hashingAlgorithm" value="sha512" checked>
+        <label for="sha512">SHA-512</label>
+    </div>
+    <button id="hashButton">Compute Hash</button>
+    <p id="result"></p>
+    <button onclick="window.location.href='index.html'">Back to Dashboard</button>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hashing Functions</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="sha256_sha512.js" defer></script> <!-- Your WebAssembly or native hashing code -->
+    <script src="hashing.js" defer></script> <!-- Your JavaScript to handle the WebAssembly or native hashing -->
+</head>
+<body class = "main_css">
+    
+    <video class="video-background" autoplay loop muted>
+        <source src="Anonymous Digital Hacker Face HD [Royalty-Free - No copyright - Stock Video].mp4" >
+        Your browser does not support the video tag.
+    </video>
+    
+    <h1>Generate SHA-256 & SHA-512 Hashes</h1>
+    
+    <!-- User input area for text to hash -->
+    <input type="text" id="input" placeholder="Enter text to hash" />
+    
+    <!-- Select radio buttons for SHA-256 or SHA-512 -->
+    <div>
+        <input type="radio" id="sha256" name="hashingAlgorithm" value="sha256">
+        <label for="sha256">SHA-256</label>
+        
+        <input type="radio" id="sha512" name="hashingAlgorithm" value="sha512" checked>
+        <label for="sha512">SHA-512</label>
+    </div>
+
+    <!-- Button to trigger hash computation -->
+    <button id="hashButton">Compute Hash</button>
+    
+    <!-- Display the result of the hashing -->
+    <p id="result"></p>
+    
+    <!-- Back button to dashboard -->
+    <button onclick="window.location.href='index.html'">Back to Dashboard</button>
+</body>
+</html>

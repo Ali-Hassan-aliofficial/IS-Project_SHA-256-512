@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyze SHA-2 Variants</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class ="secondary_css">
+
+    <video class="video-background" autoplay loop muted>
+        <source src="Anonymous Digital Hacker Face HD [Royalty-Free - No copyright - Stock Video].mp4" >
+        Your browser does not support the video tag.
+    </video>
+    
+    <h1>Analyze SHA-2 Variants (SHA-256 & SHA-512)</h1>
+
+    <!-- Back to Dashboard Button -->
+    <button onclick="window.location.href='index.html'">Back to Dashboard</button>
+
+    <!-- Information about SHA-256 and SHA-512 -->
+    <section class="sha-info">
+        <h2>Why SHA-256 and SHA-512?</h2>
+        <p>
+            The SHA-2 family of hash functions includes algorithms like SHA-256 and SHA-512, which are widely used for cryptographic security. Both algorithms produce fixed-size output (256 bits for SHA-256 and 512 bits for SHA-512) from an input message of arbitrary length.
+        </p>
+        <h3>SHA-256</h3>
+        <p>
+            - **Output Size**: 256 bits (32 bytes).<br>
+            - **Security**: SHA-256 is widely used in blockchain, digital signatures, certificate generation, and SSL/TLS certificates.<br>
+            - **Performance**: Generally faster than SHA-512 on 32-bit systems, as it requires fewer resources.<br>
+            - **Use Cases**: It is the standard for most applications requiring secure hash values, like Bitcoin, Ethereum, and various other cryptographic applications.
+        </p>
+        
+        <h3>SHA-512</h3>
+        <p>
+            - **Output Size**: 512 bits (64 bytes).<br>
+            - **Security**: Similar to SHA-256, but with a larger output size, which increases security against certain types of attacks.<br>
+            - **Performance**: SHA-512 is optimized for 64-bit systems and is faster on these platforms, due to its larger block size (1024 bits compared to SHA-256's 512 bits). On 32-bit systems, it may be slower than SHA-256.<br>
+            - **Use Cases**: SHA-512 is used where higher security is needed, or for systems with 64-bit processors (e.g., servers, large-scale enterprise applications).
+        </p>
+    </section>
+
+    <!-- Project Creators Section -->
+    <section class="creators">
+        <h2>Project Creators</h2>
+        <ul>
+            <li>F21-9288</li>
+            <li>F21-9158</li>
+            <li>F21-9120</li>
+            <li>F21-9229</li>
+        </ul>
+    </section>
+    
+</body>
+</html>
