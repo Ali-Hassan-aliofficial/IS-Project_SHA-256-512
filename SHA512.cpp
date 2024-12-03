@@ -5,17 +5,21 @@
 
 
 
-#include <stdio.h>
 #include <string>
-#include <string.h>
-#include <iostream>
-#include <iomanip>
 #include <cstdint>
+#include <vector>
 #include <sstream>
-
-
-
-
+#include <iomanip>
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iomanip>
+#include <cstring>
+#include <chrono>
+#include <sys/resource.h> // For memory and CPU usage
+using namespace std;
 class SHA512{
 private:
 	typedef unsigned long long uint64;
@@ -263,9 +267,38 @@ extern "C" {
 
         // Assuming SHA512 is a class you've defined
         SHA512 sha512;
+
+        // Start timing
+        auto start = std::chrono::high_resolution_clock::now();
+
         hash_output = sha512.hash(input);  // Compute the SHA512 hash
 
-        // Return the string as a C-style string
+        // End timing
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
+
+        // Get resource usage
+        struct rusage usage;
+        getrusage(RUSAGE_SELF, &usage);
+
+        long memoryUsedKB = usage.ru_maxrss; // Memory usage in kilobytes
+        long userTimeSec = usage.ru_utime.tv_sec;
+        long userTimeMicroSec = usage.ru_utime.tv_usec;
+        long sysTimeSec = usage.ru_stime.tv_sec;
+        long sysTimeMicroSec = usage.ru_stime.tv_usec;
+
+		
+		
+
+        // Construct the output
+        std::ostringstream oss;
+        oss << "Hash: " << hash_output << "\n";
+        oss << "Processing time: " << duration << " ms\n";
+        oss << "Memory usage: " << memoryUsedKB << " KB\n";
+        oss << "User CPU time: " << userTimeSec << "s " << userTimeMicroSec << "µs\n";
+        oss << "System CPU time: " << sysTimeSec << "s " << sysTimeMicroSec << "µs\n";
+
+        hash_output = oss.str();
         return hash_output.c_str();
     }
 }

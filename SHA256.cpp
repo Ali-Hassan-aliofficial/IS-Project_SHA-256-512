@@ -4,7 +4,14 @@
 #include <sstream>
 #include <iomanip>
 #include <cstring>
-
+#include <iostream>
+#include <string>
+#include <vector>
+#include <sstream>
+#include <iomanip>
+#include <cstring>
+#include <chrono>
+#include <sys/resource.h> // For memory and CPU usage
 class SHA256 {
 private:
     typedef uint32_t uint32;
@@ -144,31 +151,80 @@ std::string SHA256::hash() {
 
 #include <emscripten/emscripten.h>
 
+// extern "C" {
+//     EMSCRIPTEN_KEEPALIVE
+//     const char* compute_sha256(const char* input) {
+//         static std::string hash_output;
+
+//         // Validate input
+//         if (input == nullptr || std::string(input).empty()) {
+//             hash_output = "Error: Empty input provided.";
+//             return hash_output.c_str();
+//         }
+
+//         SHA256 sha256;
+
+//         // Input
+//         sha256.update(input);
+
+//         // SHA256 hashing
+
+//         hash_output = sha256.hash();  // Compute the SHA256 hash
+
+//         // Return the result
+//         return hash_output.c_str();
+//     }
+// }
+
+
+
 extern "C" {
     EMSCRIPTEN_KEEPALIVE
     const char* compute_sha256(const char* input) {
-        static std::string hash_output;
+        static std::string output;
 
-        // Validate input
         if (input == nullptr || std::string(input).empty()) {
-            hash_output = "Error: Empty input provided.";
-            return hash_output.c_str();
+            output = "Error: Empty input provided.";
+            return output.c_str();
         }
 
         SHA256 sha256;
 
-        // Input
+        // Start timing
+        auto start = std::chrono::high_resolution_clock::now();
+
+        // Input data
         sha256.update(input);
 
-        // SHA256 hashing
+        // Compute the hash
+        std::string hash_result = sha256.hash();
 
-        hash_output = sha256.hash();  // Compute the SHA256 hash
+        // End timing
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-        // Return the result
-        return hash_output.c_str();
+        // Get resource usage
+        struct rusage usage;
+        getrusage(RUSAGE_SELF, &usage);
+
+        long memoryUsedKB = usage.ru_maxrss; // Memory usage in kilobytes
+        long userTimeSec = usage.ru_utime.tv_sec;
+        long userTimeMicroSec = usage.ru_utime.tv_usec;
+        long sysTimeSec = usage.ru_stime.tv_sec;
+        long sysTimeMicroSec = usage.ru_stime.tv_usec;
+
+        // Construct the output
+        std::ostringstream oss;
+        oss << "Hash: " << hash_result << "\n";
+        oss << "Processing time: " << duration << " ms\n";
+        oss << "Memory usage: " << memoryUsedKB << " KB\n";
+        oss << "User CPU time: " << userTimeSec << "s " << userTimeMicroSec << "µs\n";
+        oss << "System CPU time: " << sysTimeSec << "s " << sysTimeMicroSec << "µs\n";
+
+        output = oss.str();
+        return output.c_str();
     }
 }
-
 
 
 // #include <iostream>

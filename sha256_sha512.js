@@ -1115,6 +1115,9 @@ function dbg(...args) {
       abort('native code called abort()');
     };
 
+  var nowIsMonotonic = 1;
+  var __emscripten_get_now_is_monotonic = () => nowIsMonotonic;
+
   var __emscripten_memcpy_js = (dest, src, num) => HEAPU8.copyWithin(dest, src, src + num);
 
   var stringToUTF8Array = (str, heap, outIdx, maxBytesToWrite) => {
@@ -1241,6 +1244,12 @@ function dbg(...args) {
         stringToUTF8(summerName, std_name, 17);
       }
     };
+
+  var _emscripten_date_now = () => Date.now();
+
+  var _emscripten_err = (str) => err(UTF8ToString(str));
+
+  var _emscripten_get_now = () => performance.now();
 
   var getHeapMax = () =>
       HEAPU8.length;
@@ -1501,9 +1510,17 @@ var wasmImports = {
   /** @export */
   _abort_js: __abort_js,
   /** @export */
+  _emscripten_get_now_is_monotonic: __emscripten_get_now_is_monotonic,
+  /** @export */
   _emscripten_memcpy_js: __emscripten_memcpy_js,
   /** @export */
   _tzset_js: __tzset_js,
+  /** @export */
+  emscripten_date_now: _emscripten_date_now,
+  /** @export */
+  emscripten_err: _emscripten_err,
+  /** @export */
+  emscripten_get_now: _emscripten_get_now,
   /** @export */
   emscripten_resize_heap: _emscripten_resize_heap,
   /** @export */
